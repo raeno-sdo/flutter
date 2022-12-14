@@ -1,6 +1,8 @@
-# flutter_base
+# flutter
 
-A new Flutter project.
+環境構築は下記のURLを参照してください。
+
+https://zenn.dev/noe489/articles/b5a3571770250b
 
 ## Getting Started
 
