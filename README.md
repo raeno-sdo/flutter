@@ -2,7 +2,9 @@
 
 環境構築は下記のURLを参照してください。
 
-https://zenn.dev/noe489/articles/b5a3571770250b
+Mac : https://zenn.dev/noe489/articles/b5a3571770250b
+
+Windows : https://qiita.com/smiler5617/items/fbfee798b641f0352176
 
 ## Getting Started
 
