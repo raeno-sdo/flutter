@@ -98,9 +98,9 @@ class _MyHomePageState extends State<MyHomePage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: const <Widget>[
-                  // _Header(),
-                  // _Body(),
-                  // _Bottom(),
+                  _Header(),
+                  _Body(),
+                  _Bottom(),
                   _Latte(),
                   _Todo(),
                 ],
@@ -273,34 +273,33 @@ class _Todo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      
     );
   }
 }
 
-// class _Header extends StatelessWidget {
-//   const _Header({Key? key}) : super(key: key);
+class _Header extends StatelessWidget {
+  const _Header({Key? key}) : super(key: key);
 
-//   @override
-//   Widget build(BuildContext context) {
-//     return Container();
-//   }
-// }
+  @override
+  Widget build(BuildContext context) {
+    return Container();
+  }
+}
 
-// class _Body extends StatelessWidget {
-//   const _Body({Key? key}) : super(key: key);
+class _Body extends StatelessWidget {
+  const _Body({Key? key}) : super(key: key);
 
-//   @override
-//   Widget build(BuildContext context) {
-//     return Container();
-//   }
-// }
+  @override
+  Widget build(BuildContext context) {
+    return Container();
+  }
+}
 
-// class _Bottom extends StatelessWidget {
-//   const _Bottom({Key? key}) : super(key: key);
+class _Bottom extends StatelessWidget {
+  const _Bottom({Key? key}) : super(key: key);
 
-//   @override
-//   Widget build(BuildContext context) {
-//     return Container();
-//   }
-// }
+  @override
+  Widget build(BuildContext context) {
+    return Container();
+  }
+}
