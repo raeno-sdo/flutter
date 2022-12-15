@@ -221,12 +221,6 @@ class _Latte extends StatelessWidget {
                                   selected = !selected;
                                 });
                               },
-                              // isSelected: selected,
-                              // selectedIcon: const Icon(Icons.settings),
-                              // color: selected
-                              //   // ignore: dead_code
-                              //   ? Colors.white
-                              //   : Colors.grey,
                             ),
                           ),
                         ),
