@@ -1,3 +1,5 @@
+// ignore_for_file: library_private_types_in_public_api
+
 import 'package:flutter/material.dart';
 // import 'package:flutter_screenutil/flutter_screenutil.dart';
 // import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -20,8 +22,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       routes: <String, WidgetBuilder>{
-        '/ToDo':(BuildContext context) => const _Todo(),
-        '/Latte':(BuildContext context) => const _Latte(),
+        '/ToDo':(BuildContext context) => _Todo(),
+        '/Latte':(BuildContext context) => const Latte(),
       },
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
@@ -58,6 +60,16 @@ class TestPage extends StatefulWidget {
   @override
   State<TestPage> createState() => _TestPageState();
 }
+
+// global変数
+final menuList = [
+  'JavaScript',
+  'Java',
+  'Python',
+  'PHP',
+  'C++',
+];
+final  List<String> todoList = [];
 
 class _TestPageState extends State<TestPage> {
   final GlobalKey<ScaffoldState>
@@ -110,7 +122,7 @@ class _TestPageState extends State<TestPage> {
                   // _Body(),
                   // _Bottom(),
                   // _Latte(),
-                  const _Todo(),
+                  _Todo(),
                   Padding(
                     padding: const EdgeInsets.only(top: 50),
                     child: ElevatedButton(
@@ -132,13 +144,24 @@ class _TestPageState extends State<TestPage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: (){
-          Navigator.of(context).push(
-            MaterialPageRoute(builder: (context){
-              return TodoAddPage();
-              }
-            ),
+        onPressed: () async {
+          // Navigator.of(context).push(
+          //   MaterialPageRoute(builder: (context){
+          //     return const TodoAddPage();
+          //     }
+          //   ),
+          // );
+          final newListText = await Navigator.of(context).push(
+            MaterialPageRoute(builder: (context) {
+              // 遷移先の画面としてリスト追加画面を指定
+              return const TodoAddPage();
+            }),
           );
+          if (newListText != null){
+            setState(() {
+              todoList.add(newListText);
+            });
+          }
         },
         backgroundColor:const Color.fromARGB(255, 35, 103, 1),
         child: const Icon(
@@ -150,16 +173,15 @@ class _TestPageState extends State<TestPage> {
   }
 }
 
-final menuList = [
-  'JavaScript',
-  'Java',
-  'Python',
-  'PHP',
-  'C++',
-];
+// [setState]を使う場合はcreateStateで宣言しないとエラーが出て使えない
+class Latte extends StatefulWidget {
+  const Latte({super.key});
 
-class _Latte extends StatelessWidget {
-  const _Latte({Key? key}) : super(key: key);
+  // 使用するStateを指定
+  @override
+  _LatteState createState() => _LatteState();
+}
+class _LatteState extends State<Latte> {
   @override
   Widget build(BuildContext context) {
     bool selected = false;
@@ -321,14 +343,10 @@ class _Latte extends StatelessWidget {
       ),
     );
   }
-  void setState(Null Function() param0) {}
 }
 
 // ToDoリスト用のClass
 class _Todo extends StatelessWidget {
-  const _Todo({Key? key}) : super(key: key);
-
-  @override
   Widget build(BuildContext context) {
     return Column(
         children: <Widget>[
@@ -342,39 +360,22 @@ class _Todo extends StatelessWidget {
               ),
             ),
           ),
-          ListView(
+          ListView.builder(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
-            children: const <Widget>[
-              Card(
-                color: Colors.white,
-                shadowColor: Color.fromARGB(255, 35, 103, 1),
+            itemCount: todoList.length,
+            itemBuilder: (context, index) {
+              return Card(
                 child: ListTile(
-                  title: Text('1. Text'),
+                  title: Text(
+                    todoList[index],
+                    style: const TextStyle(
+                      color: Colors.black,
+                    ),
+                  ),
                 ),
-              ),
-              Card(
-                color: Colors.white,
-                shadowColor: Color.fromARGB(255, 35, 103, 1),
-                child: ListTile(
-                  title: Text('2. Text'),
-                ),
-              ),
-              Card(
-                color: Colors.white,
-                shadowColor: Color.fromARGB(255, 35, 103, 1),
-                child: ListTile(
-                  title: Text('3. Text'),
-                ),
-              ),
-              Card(
-                color: Colors.white,
-                shadowColor: Color.fromARGB(255, 35, 103, 1),
-                child: ListTile(
-                  title: Text('4. Text'),
-                ),
-              ),
-            ],
+              );
+            },
           ),
         ]
     );
@@ -382,9 +383,15 @@ class _Todo extends StatelessWidget {
 }
 
 // リスト追加画面用Widget
-class TodoAddPage extends StatelessWidget {
-  String _text = '';
+class TodoAddPage extends StatefulWidget {
+  const TodoAddPage({super.key});
 
+  // 使用するStateを指定
+  @override
+  _TodoAddPageState createState() => _TodoAddPageState();
+}
+class _TodoAddPageState extends State<TodoAddPage> {
+  String _text = '';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -397,7 +404,7 @@ class TodoAddPage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 const SizedBox(height: 100),
-                Text(_text, style: const TextStyle(color: Colors.blue)),
+                Text(_text, style: const TextStyle(color: Color.fromARGB(255, 35, 103, 1))),
                 SizedBox(
                   width: 400,
                   child: TextField(
@@ -418,7 +425,10 @@ class TodoAddPage extends StatelessWidget {
                         borderRadius: BorderRadius.circular(10.0),
                       ),
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                       // "pop"の引数から前の画面にデータを渡す
+                      Navigator.of(context).pop(_text);
+                    },
                     icon: const Icon(Icons.touch_app, color: Colors.white,),
                     label: const Text(
                       'リストを追加',
@@ -449,7 +459,6 @@ class TodoAddPage extends StatelessWidget {
       ),
     );
   }
-  void setState(Null Function() param0) {}
 }
 
 class _Header extends StatelessWidget {
