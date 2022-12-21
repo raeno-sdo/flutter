@@ -114,8 +114,16 @@ class _TestPageState extends State<TestPage> {
                   Padding(
                     padding: const EdgeInsets.only(top: 50),
                     child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color.fromARGB(255, 35, 103, 1),
+                      ),
                       onPressed: () => Navigator.of(context).pushNamed("/Latte"),
-                      child: const Text('Latte')
+                      child: const Text(
+                        'Latte',
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
+                      )
                     ),
                   ),
                 ],
